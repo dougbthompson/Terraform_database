@@ -1,7 +1,6 @@
 #!/bin/bash -e
 
-# Use the following variables to control your install:
-
+# MySQL install for "MaridDB (Includes Galera) 10.3
 # Password for the root user
 MYSQL_ROOT_PASSWORD='ChangeMe172!'
 
