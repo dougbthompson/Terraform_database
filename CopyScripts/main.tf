@@ -7,22 +7,22 @@ provider "aws" {
 variable "scp_command_mssql" {
   type = "list"
   default = [ "scp -o StrictHostKeyChecking=no ",
-              "-i /home/dthompson/aws/db_ec2_ohio_01.pem ",
-              "/opt/terraform/g/install_mssql.sh ubuntu@",
+              "-i ~/aws/db_ec2_ohio_01.pem ",
+              "../install_mssql.sh ubuntu@",
               ":/tmp" ]
 }
 variable "scp_command_galera" {
   type = "list"
   default = [ "scp -o StrictHostKeyChecking=no ",
-              "-i /home/dthompson/aws/db_ec2_ohio_01.pem ",
-              "/opt/terraform/g/install_galera.sh ubuntu@",
+              "-i ~/aws/db_ec2_ohio_01.pem ",
+              "../install_galera.sh ubuntu@",
               ":/tmp" ]
 }
 variable "scp_command_postgres" {
   type = "list"
   default = [ "scp -o StrictHostKeyChecking=no ",
-              "-i /home/dthompson/aws/db_ec2_ohio_01.pem ",
-              "/opt/terraform/g/install_postgres.sh ubuntu@",
+              "-i ~/aws/db_ec2_ohio_01.pem ",
+              "../install_postgres.sh ubuntu@",
               ":/tmp" ]
 }
 
@@ -111,5 +111,5 @@ resource "null_resource" "run_scp_postgres" {
   }
 }
 
-# scp -o StrictHostKeyChecking=no -i /home/dthompson/aws/db_ec2_ohio_01.pem /opt/terraform/g/install_postgres.sh ubuntu@18.223.108.42:/tmp
+# scp -o StrictHostKeyChecking=no -i ~/aws/db_ec2_ohio_01.pem ../install_postgres.sh ubuntu@18.223.108.42:/tmp
 

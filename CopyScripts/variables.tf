@@ -15,22 +15,23 @@ variable "region" {
 
 variable "ami" {
   type    = "string"
-  default = "ami-5e8bb23b"
+  default = "ami-0552e3455b9bc8d50"
+# default = "ami-5e8bb23b"
 }
 
 variable "instance_type" {
   type    = "string"
-  default = "t2.small"
+  default = "t3.small"
 }
 
 variable "pem_file" {
   type    = "string"
-  default = "/home/dthompson/aws/db_ec2_ohio_01.pem"
+  default = "~/aws/db_ec2_ohio_01.pem"
 }
 
 variable "public_ips" {
   type    = "list"
-  default = [ "18.191.205.168", "18.223.108.42", "13.58.232.95" ]
+  default = [ "18.218.108.31", "18.222.164.199", "18.217.252.115" ]
 }
 
 # ips   = "${lookup(var.clientnode_instance_ips, count.index)}"
