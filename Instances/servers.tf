@@ -3,7 +3,7 @@ data "aws_ami" "ubuntu" {
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20180627"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20180814"]
   }
 
   filter {
@@ -12,13 +12,15 @@ data "aws_ami" "ubuntu" {
   }
 
   owners = ["099720109477"]
+
+  # ami-0552e3455b9bc8d50
 }
 
 resource "aws_instance" "NodeA" {
   ami                         = "${data.aws_ami.ubuntu.id}"
   subnet_id                   = "${aws_subnet.subnet1.id}"
   vpc_security_group_ids      = ["${aws_security_group.t2_security.id}"]
-  instance_type               = "t2.small"
+  instance_type               = "t3.small"
   associate_public_ip_address = true
   key_name                    = "DB_EC2_Ohio_01"
   iam_instance_profile        = "DB_EC2_Setup"
@@ -38,7 +40,7 @@ resource "aws_instance" "NodeB" {
   ami                         = "${data.aws_ami.ubuntu.id}"
   subnet_id                   = "${aws_subnet.subnet1.id}"
   vpc_security_group_ids      = ["${aws_security_group.t2_security.id}"]
-  instance_type               = "t2.small"
+  instance_type               = "t3.small"
   associate_public_ip_address = true
   key_name                    = "DB_EC2_Ohio_01"
   iam_instance_profile        = "DB_EC2_Setup"
@@ -58,7 +60,7 @@ resource "aws_instance" "NodeC" {
   ami                         = "${data.aws_ami.ubuntu.id}"
   subnet_id                   = "${aws_subnet.subnet1.id}"
   vpc_security_group_ids      = ["${aws_security_group.t2_security.id}"]
-  instance_type               = "t2.small"
+  instance_type               = "t3.small"
   associate_public_ip_address = true
   key_name                    = "DB_EC2_Ohio_01"
   iam_instance_profile        = "DB_EC2_Setup"

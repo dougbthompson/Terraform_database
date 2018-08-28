@@ -42,6 +42,7 @@ resource "aws_subnet" "subnet1" {
   availability_zone       = "us-east-2a"
   map_public_ip_on_launch = true
 }
+
 resource "aws_route_table_association" "s1rt" {
   subnet_id      = "${aws_subnet.subnet1.id}"
   route_table_id = "${aws_route_table.t2_rt.id}"
@@ -53,6 +54,7 @@ resource "aws_subnet" "subnet2" {
   availability_zone       = "us-east-2b"
   map_public_ip_on_launch = true
 }
+
 resource "aws_route_table_association" "s2rt" {
   subnet_id      = "${aws_subnet.subnet2.id}"
   route_table_id = "${aws_route_table.t2_rt.id}"
@@ -64,6 +66,7 @@ resource "aws_subnet" "subnet3" {
   availability_zone       = "us-east-2c"
   map_public_ip_on_launch = true
 }
+
 resource "aws_route_table_association" "s3rt" {
   subnet_id      = "${aws_subnet.subnet3.id}"
   route_table_id = "${aws_route_table.t2_rt.id}"
