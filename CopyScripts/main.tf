@@ -6,24 +6,42 @@ provider "aws" {
 
 variable "scp_command_mssql" {
   type = "list"
-  default = [ "scp -o StrictHostKeyChecking=no ",
-              "-i ~/aws/db_ec2_ohio_01.pem ",
-              "../install_mssql.sh ubuntu@",
-              ":/tmp" ]
+
+  default = ["scp -o StrictHostKeyChecking=no ",
+    "-i ~/aws/db_ec2_ohio_01.pem ",
+    "../install_mssql.sh ubuntu@",
+    ":/tmp",
+  ]
 }
+
 variable "scp_command_galera" {
   type = "list"
-  default = [ "scp -o StrictHostKeyChecking=no ",
-              "-i ~/aws/db_ec2_ohio_01.pem ",
-              "../install_galera.sh ubuntu@",
-              ":/tmp" ]
+
+  default = ["scp -o StrictHostKeyChecking=no ",
+    "-i ~/aws/db_ec2_ohio_01.pem ",
+    "../install_galera.sh ubuntu@",
+    ":/tmp",
+  ]
 }
+
 variable "scp_command_postgres" {
   type = "list"
-  default = [ "scp -o StrictHostKeyChecking=no ",
-              "-i ~/aws/db_ec2_ohio_01.pem ",
-              "../install_postgres.sh ubuntu@",
-              ":/tmp" ]
+
+  default = ["scp -o StrictHostKeyChecking=no ",
+    "-i ~/aws/db_ec2_ohio_01.pem ",
+    "../install_postgres.sh ubuntu@",
+    ":/tmp",
+  ]
+}
+
+variable "scp_command_percona" {
+  type = "list"
+
+  default = ["scp -o StrictHostKeyChecking=no ",
+    "-i ~/aws/db_ec2_ohio_01.pem ",
+    "../install_percona.sh ubuntu@",
+    ":/tmp",
+  ]
 }
 
 resource "null_resource" "run_scp_mssql" {
@@ -32,6 +50,7 @@ resource "null_resource" "run_scp_mssql" {
   }
 
   count = "${length("${var.public_ips}")}"
+
   connection {
     user        = "ubuntu"
     private_key = "${file("${var.pem_file}")}"
@@ -65,6 +84,7 @@ resource "null_resource" "run_scp_galera" {
   }
 
   count = "${length("${var.public_ips}")}"
+
   connection {
     user        = "ubuntu"
     private_key = "${file("${var.pem_file}")}"
@@ -91,6 +111,7 @@ resource "null_resource" "run_scp_postgres" {
   }
 
   count = "${length("${var.public_ips}")}"
+
   connection {
     user        = "ubuntu"
     private_key = "${file("${var.pem_file}")}"
@@ -111,5 +132,32 @@ resource "null_resource" "run_scp_postgres" {
   }
 }
 
-# scp -o StrictHostKeyChecking=no -i ~/aws/db_ec2_ohio_01.pem ../install_postgres.sh ubuntu@18.223.108.42:/tmp
+resource "null_resource" "run_scp_percona" {
+  triggers {
+    run_scp_percona = "${uuid()}"
+  }
+
+  count = "${length("${var.public_ips}")}"
+
+  connection {
+    user        = "ubuntu"
+    private_key = "${file("${var.pem_file}")}"
+    host        = "${element("${var.public_ips}", count.index)}"
+  }
+
+  provisioner "local-exec" {
+    command = "echo $A$B$C$D$E > /tmp/script_pe_$F.sh; chmod 755 /tmp/script_pe_$F.sh; /tmp/script_pe_$F.sh"
+
+    environment {
+      A = "${element("${var.scp_command_percona}", 0)}"
+      B = "${element("${var.scp_command_percona}", 1)}"
+      C = "${element("${var.scp_command_percona}", 2)}"
+      D = "${element("${var.public_ips}", count.index)}"
+      E = "${element("${var.scp_command_percona}", 3)}"
+      F = "${count.index}"
+    }
+  }
+}
+
+# scp -o StrictHostKeyChecking=no -i ~/aws/db_ec2_ohio_01.pem ../install_percona.sh ubuntu@18.223.108.42:/tmp
 

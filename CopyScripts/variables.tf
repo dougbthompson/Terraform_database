@@ -16,7 +16,8 @@ variable "region" {
 variable "ami" {
   type    = "string"
   default = "ami-0552e3455b9bc8d50"
-# default = "ami-5e8bb23b"
+
+  # default = "ami-5e8bb23b"
 }
 
 variable "instance_type" {
@@ -31,7 +32,7 @@ variable "pem_file" {
 
 variable "public_ips" {
   type    = "list"
-  default = [ "18.218.108.31", "18.222.164.199", "18.217.252.115" ]
+  default = ["18.191.139.126", "18.217.128.93", "18.219.238.96"]
 }
 
 # ips   = "${lookup(var.clientnode_instance_ips, count.index)}"
